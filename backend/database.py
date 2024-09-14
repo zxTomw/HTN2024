@@ -1,7 +1,7 @@
 import os
 from supabase import create_client
 from dotenv import load_dotenv
-load_dotenv()
+
 
 def create_user(supabase, user):
     response = supabase.table("Users").select("id, user").execute()

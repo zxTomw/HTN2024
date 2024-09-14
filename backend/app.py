@@ -1,5 +1,5 @@
 from database import *
-
+load_dotenv()
 supabase = supabase_auth()
     
 

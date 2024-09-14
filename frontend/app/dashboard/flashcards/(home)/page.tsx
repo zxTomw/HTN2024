@@ -1,5 +1,6 @@
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Decks } from "./decks";
+import Link from "next/link";
 const mockDeckBriefs = [
   {
     id: "1",
@@ -26,13 +27,18 @@ export default function Home() {
           Hi there! 👋 <br />
           Manage and create your Decks here
         </h1>
-        <div className="flex gap-10">
+        <div className="flex flex-wrap gap-10">
           <Decks deckBriefArray={mockDeckBriefs} />
-          <Card>
-            <CardHeader>
-              <CardTitle>Create a New Deck</CardTitle>
-            </CardHeader>
-          </Card>
+          <Link href="flashcards/generate-cards">
+            <Card className="">
+              <CardHeader>
+                <CardTitle>Create a New Deck</CardTitle>
+                <CardContent>
+                  Generate a new deck using our AI powered flashcard generator
+                </CardContent>
+              </CardHeader>
+            </Card>
+          </Link>
         </div>
       </div>
     </div>

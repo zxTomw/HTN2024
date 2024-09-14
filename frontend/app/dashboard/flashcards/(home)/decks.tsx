@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 
 export type deckBrief = {
   id: string;
@@ -14,12 +15,14 @@ export function Decks({ deckBriefArray }: DecksProps) {
   return (
     <>
       {deckBriefArray.map((deck) => (
-        <Card key={deck.id}>
-          <CardHeader>
-            <CardTitle>{deck.title}</CardTitle>
-          </CardHeader>
-          <CardContent>{deck.description}</CardContent>
-        </Card>
+        <Link href={`/dashboard/flashcards/${deck.id}`} key={deck.id}>
+          <Card>
+            <CardHeader>
+              <CardTitle>{deck.title}</CardTitle>
+            </CardHeader>
+            <CardContent>{deck.description}</CardContent>
+          </Card>
+        </Link>
       ))}
     </>
   );

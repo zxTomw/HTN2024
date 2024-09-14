@@ -1,7 +1,9 @@
 import requests
+import os
+import json
 
 url = "https://general-runtime.voiceflow.com/state/user/userID/interact?logs=off"
-
+# print(os.environ['API_KEY'])
 payload = {
     "action": { "type": "launch" },
     "config": {
@@ -18,5 +20,6 @@ headers = {
 }
 
 response = requests.post(url, json=payload, headers=headers)
+
 
 print(response.text)

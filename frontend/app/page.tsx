@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 
 export default async function Home() {
-  const data= await (await fetch("http://127.0.0.1:5000/api")).json()
+  const data= await (await fetch("http://127.0.0.1:5000/api")).json() 
+// takes the stuff from backend into json 
  
 
   return (

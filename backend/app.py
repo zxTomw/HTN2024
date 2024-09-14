@@ -1,4 +1,4 @@
-
+from query import *
 from flask import Flask
 import json
 
@@ -6,10 +6,13 @@ import json
 airesp={
     "msg":"htn"
 }
-airespjson=json.dumps(airesp)
+airesp_string=json.dumps(airesp)
+# print(airesp_string)
+
+voiceflow_response = response
 
 app = Flask(__name__)
 
-@app.route("/api")
+@app.route("/")
 def hello_world():
-    return airesp
+    return voiceflow_response.text

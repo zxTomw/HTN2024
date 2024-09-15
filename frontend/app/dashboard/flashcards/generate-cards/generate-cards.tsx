@@ -4,12 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { DropzoneWrapper } from "@/components/wrappers/dropzone-wrapper";
 import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export function GenerateCards() {
   const [files, setFiles] = useState<FileList | null>(null);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
+  const rounter = useRouter();
   function uploadFile(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
@@ -23,11 +25,11 @@ export function GenerateCards() {
       .then((data) => {
         console.log(data);
         setMsg(data["msg"]);
+        rounter.push(
+          `/dashboard/flashcards/generate-cards/result?deck=${data["msg"]}`
+        );
       });
   }
-  useEffect(() => {
-    msg && redirect(`/dashboard/flashcards/result?deck=${msg}`);
-  }, [msg]);
 
   return (
     <form

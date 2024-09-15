@@ -2,6 +2,7 @@ from database import *
 from query import *
 from flask import Flask, request
 import json
+from flask import request
 from gptfile import summarize
 
 load_dotenv()
@@ -21,9 +22,8 @@ def create_user_handler():
     response = create_user(supabase, user)
     return response
 
-@app.route('/api/decks', methods=['GET'])
-def show_decks_handler():
-    user = request.json['user']
+@app.route('/api/users/<user>/decks', methods=['GET'])
+def show_decks_handler(user):
     response = show_decks(supabase, user)
     return json.dumps(response)
 
@@ -49,7 +49,7 @@ def add_deck_handler():
     deck_name = request.json['deck_name']
     response = add_deck(supabase, user, deck_name)
     return json.dumps(response)
-    
+
 
 
 

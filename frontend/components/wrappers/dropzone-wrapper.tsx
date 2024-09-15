@@ -8,8 +8,6 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 
-const queryClient = new QueryClient();
-
 type DropzoneWrapperProps = {
   className?: string;
 };

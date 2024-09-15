@@ -1,5 +1,4 @@
-"use client";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Dropzone } from "../ui/dropzone";
 import { cn } from "@/lib/utils";
 import {
@@ -10,30 +9,19 @@ import {
 
 type DropzoneWrapperProps = {
   className?: string;
+  files: string[];
+  onFilesChange: Dispatch<SetStateAction<string[]>>;
 };
 
-export function DropzoneWrapper({ className }: DropzoneWrapperProps) {
-  const [files, setFiles] = useState<string[]>([]);
-  const { isPending, error, data } = useQuery({
-    queryKey: ["repoData"],
-    queryFn: () =>
-      fetch("http://127.0.0.1:5000/summarize", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          files,
-        }),
-        
-      }).then((res) =>
-        res.json()
-      ),
-  });
+export function DropzoneWrapper({
+  className,
+  files,
+  onFilesChange,
+}: DropzoneWrapperProps) {
   return (
     <>
       <Dropzone
-        onChange={setFiles}
+        onChange={onFilesChange}
         className={cn("w-full", className)}
         fileExtension="pdf"
       />
@@ -43,7 +31,9 @@ export function DropzoneWrapper({ className }: DropzoneWrapperProps) {
             <span>{file}</span>
             <button
               onClick={() =>
-                setFiles((prevFiles) => prevFiles.filter((f) => f !== file))
+                onFilesChange((prevFiles) =>
+                  prevFiles.filter((f) => f !== file)
+                )
               }
             >
               Remove

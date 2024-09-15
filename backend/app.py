@@ -3,14 +3,16 @@ from query import *
 from flask import Flask, request
 import json
 from gptfile import summarize
+from flask_cors import CORS
 
-load_dotenv()
 supabase = supabase_auth()
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/summarize', methods=['POST'])
 def upload_file():
+    print(request.json)
     file = request.files['file']
     file.save(file.filename)
     return summarize(file.filename)

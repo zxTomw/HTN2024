@@ -14,14 +14,14 @@ client = OpenAI(api_key = OPENAI_API_KEY)
 
 def flashcard(filename):
   userPrompt = "Please create 5 flashcard questions followed by their answers. Based on the given document, refer specific sections and content of the document. Keep the questions brief and *ONLY* in json format"
-  fileProcess(filename, userPrompt)
+  return fileProcess(filename, userPrompt)
 def summarize(filename, concept):
-  userPrompt = f"Please summarize the concept of {concept} in under 3 sentences. Refer specific quotes of the document."
-  fileProcess(filename, userPrompt)
+  userPrompt = f"Please summarize the concept of {concept} in three key points. Refer specific quotes of the document."
+  return fileProcess(filename, userPrompt)
 
 def question(filename, question): # example: What is the university and program is this course for?
   userPrompt = question
-  fileProcess(filename, userPrompt)
+  return fileProcess(filename, userPrompt)
 
 def fileProcess(filename, userPrompt):
 #/home/derek/Downloads/HTN2024/document.pdf
@@ -101,7 +101,7 @@ def fileProcess(filename, userPrompt):
 
   print(message_content.value)
   print("\n".join(citations))
-  return (message_content.value, "\n".join(citations))
+  return message_content.value
 
 
 # FOR TESTING PURPOSES RUN THIS FILE ================================================================
@@ -109,7 +109,7 @@ while True:
   print("QUESTION:1, FLASHCARD:2, SUMMARIZE:3")
   user = input()
   if user == "1":
-    question("/home/derek/Downloads/HTN2024/document.pdf", input("Enter question: "))
+    question("./251lec1.pdf", input("Enter question: "))
   elif user == "2":
     flashcard("/home/derek/Downloads/HTN2024/document.pdf")
   elif user == "3":

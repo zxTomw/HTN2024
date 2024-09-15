@@ -11,7 +11,7 @@ export function GenerateCards() {
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", files![0]);
-    fetch("http://127.0.0.1:5000/summarize", {
+    fetch("http://127.0.0.1:8000/flashcard-gen", {
       method: "POST",
       body: formData,
     })
@@ -22,7 +22,7 @@ export function GenerateCards() {
   return (
     <form
       onSubmit={uploadFile}
-      className="h-full w-full flex justify-center items-center gap-10 flex-col"
+      className="h-dvh w-dvw flex justify-center items-center gap-10 flex-col"
     >
       <h1 className="text-2xl font-bold">Generate Your Flashcards</h1>
       <div className="flex gap-5 items-center justify-center h-1/3  w-1/2">

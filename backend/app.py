@@ -2,7 +2,9 @@ from database import *
 from query import *
 from flask import Flask, request
 import json
-from gptfile import fileProcess
+from gptfile import *
+from flask_cors import CORS, cross_origin
+
 
 supabase = supabase_auth()
 
@@ -10,11 +12,22 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route('/summarize', methods=['POST'])
+@cross_origin(origin='*')
 def upload_file():
-    print(request.json)
-    file = request.files['file']
-    file.save(file.filename)
-    return fileProcess(file.filename)
+    if 'file' in request.files:
+        file = request.files['file']
+        file.save(file.filename)
+    result = summarize(file.filename, "math")
+    return json.dumps({"msg": result})
+
+@app.route('/flashcard-gen', methods=['POST'])
+@cross_origin(origin='*')
+def card_gen():
+    if 'file' in request.files:
+        file = request.files['file']
+        file.save(file.filename)
+    result = flashcard(file.filename)
+    return json.dumps({"msg": result})
 
 @app.route('/api/users', methods=['POST'])
 def create_user_handler():

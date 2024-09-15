@@ -1,6 +1,11 @@
 from openai import OpenAI
+from dotenv import load_dotenv
+import os
 
-OPENAI_API_KEY = "sk-uA5AzVFp1P6p0vRtFw_xgyHZahsOO9t42vX38QGQnlT3BlbkFJ6HktSHdket4z8aRmixzD-LuAsPxLFZisAawWxBxt8A"
+load_dotenv()
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+print(OPENAI_API_KEY)
+
 client = OpenAI(api_key = OPENAI_API_KEY)
  
 summarizer_assistant = client.beta.assistants.create(

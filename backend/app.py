@@ -2,7 +2,6 @@ from database import *
 from query import *
 from flask import Flask, request
 import json
-from flask import request
 from gptfile import summarize
 
 load_dotenv()

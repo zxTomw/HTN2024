@@ -1,6 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Decks } from "./decks";
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { getDecks } from "@/lib/user";
 const mockDeckBriefs = [
   {
     id: "1",
@@ -19,7 +21,10 @@ const mockDeckBriefs = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const cookieStore = cookies();
+  const user = cookieStore.get("user")?.value;
+  const decks = user ? await getDecks(user) : [];
   return (
     <div className="h-dvh w-dvw flex justify-center items-center gap-10 flex-col">
       <div className="flex flex-col gap-5 w-2/3 h-2/3 items-baseline justify-center">
@@ -28,7 +33,7 @@ export default function Home() {
           Manage and create your Decks here
         </h1>
         <div className="flex flex-wrap gap-10">
-          <Decks deckBriefArray={mockDeckBriefs} />
+          <Decks deckBriefArray={decks} />
           <Link href="flashcards/generate-cards">
             <Card className="">
               <CardHeader>

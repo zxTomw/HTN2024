@@ -31,7 +31,7 @@ export default async function page() {
         </h1>
         <div className="flex flex-wrap gap-10">
           <Notes noteBriefArray={mockNoteBriefArray} />
-          <Link href="flashcards/generate-cards">
+          <Link href="notes/scan">
             <Card className="">
               <CardHeader>
                 <CardTitle>Create a New Note</CardTitle>

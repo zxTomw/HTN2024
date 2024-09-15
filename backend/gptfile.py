@@ -69,7 +69,8 @@ def handNotes(filename):
   text_file = open("transcription.txt", "w")
   text_file.write(transcription)
   text_file.close()
-  return summarize("transcription.txt", "this document")
+  return {"summary": summarize("transcription.txt", "this document"), 
+  "transcript": transcription}
 
 def encode_image(image_path):
   with open(image_path, "rb") as image_file:

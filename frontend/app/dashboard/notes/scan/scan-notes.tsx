@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export function GenerateCards() {
+export function ScanNotes() {
   const [files, setFiles] = useState<FileList | null>(null);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
@@ -18,7 +18,7 @@ export function GenerateCards() {
     setLoading(true);
     const formData = new FormData();
     formData.append("file", files![0]);
-    fetch("http://127.0.0.1:8000/flashcard-gen", {
+    fetch("http://127.0.0.1:8000/notes-summary", {
       method: "POST",
       body: formData,
     })
@@ -26,8 +26,12 @@ export function GenerateCards() {
       .then((data) => {
         console.log(data);
         setMsg(data["msg"]);
+        const response = {
+          msg: data["msg"],
+          transcript: data["transcript"],
+        };
         rounter.push(
-          `/dashboard/flashcards/generate-cards/result?deck=${data["msg"]}`
+          `/dashboard/notes/scan/result?response=${JSON.stringify(response)}`
         );
       });
   }
@@ -37,10 +41,8 @@ export function GenerateCards() {
       onSubmit={uploadFile}
       className="h-dvh w-dvw flex justify-center items-center gap-10 flex-col"
     >
-      <h1 className="text-2xl font-bold">Generate Your Flashcards</h1>
+      <h1 className="text-2xl font-bold">Summarize Your Written Notes</h1>
       <div className="flex gap-5 items-center justify-center h-1/3  w-1/2">
-        <Textarea className="h-full" placeholder="Paste your notes here" />
-        <div>OR</div>
         <Input
           type="file"
           className="h-full flex-grow flex justify-center items-center"

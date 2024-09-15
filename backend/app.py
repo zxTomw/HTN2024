@@ -29,6 +29,22 @@ def card_gen():
     result = flashcard(file.filename)
     return json.dumps({"msg": result})
 
+@app.route('/notes-summary', methods=['POST'])
+@cross_origin(origin='*')
+def hand_notes():
+    if 'file' in request.files:
+        file = request.files['file']
+        file.save(file.filename)
+    result = handNotes(file.filename)
+    return json.dumps({"msg": result["summary"], "transcript": result["transcript"]})
+
+@app.route('/text-flashcard', methods=['POST'])
+@cross_origin(origin='*')
+def text_card_gen():
+    text = request.json['text']
+    result = flashcard(text)
+    return json.dumps({"msg": result})
+
 @app.route('/api/users', methods=['POST'])
 def create_user_handler():
     user = request.json['user']
@@ -49,18 +65,15 @@ def show_cards_in_deck_handler(username,deck_name):
     return json.dumps(response)
 
 @app.route('/api/users/<username>/decks/<deck_name>', methods=['POST'])   
-def save_cards_in_deck_handler():
-    user = request.json['user']
-    deck_name = request.json['deck_name']
+def save_cards_in_deck_handler(username, deck_name):
     cards = request.json['cards']
     response = save_cards_in_deck(supabase, user, deck_name, cards)
     return json.dumps(response)
 
 @app.route('/api/users/<username>/decks', methods=['POST'])
-def add_deck_handler():
-    user = request.json['user']
+def add_deck_handler(username):
     deck_name = request.json['deck_name']
-    response = add_deck(supabase, user, deck_name)
+    response = add_deck(supabase, username, deck_name)
     return json.dumps(response)
 
 

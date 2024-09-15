@@ -19,6 +19,7 @@ export type FlashcardViewProps = {
   deck: FlashCard[];
 };
 export function FlashcardView({ deck }: FlashcardViewProps) {
+  if (!deck) return <p>Deck is empty</p>;
   return (
     <div>
       <Carousel className="w-full max-w-xs">

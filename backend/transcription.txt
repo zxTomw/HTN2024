@@ -1,0 +1,25 @@
+MATH 115 Notes
+
+V - Universal Quantifier "for all"  
+3 - Existential Quantifier "there is"
+
+Statements have 4 parts:
+1. Quantifier (how much)
+2. Variable
+3. Domain (which set the variable belongs to)
+4. Property (open sentence about quantified variable; tells what)
+
+e.g) For every natural number n, 2n+11+15 is composite
+      quantifier   domain         variable       property
+
+e.g)  
+For every integer x satisfies x^2 - n ≥ 0  
+   ∀ x ∈ Z, n - n ≥ 0  
+Then exists a real number x such that x - 7 = 5  
+   ⇒ ∃ x ∈ R, x^2 - 7 = 5  
+
+A statement is a sentence that is T or F  
+Open sentence - non statement that becomes statement when a variable is replaced with a value.
+
+Negation:  
+¬(∀ x ∈ S, P(x)) ≡ (∃ y ∈ S, ¬P(y))

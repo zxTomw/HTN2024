@@ -8,19 +8,21 @@ export type deckBrief = {
 };
 
 export type DecksProps = {
-  deckBriefArray: deckBrief[];
+  deckBriefArray?: string[];
 };
 
 export function Decks({ deckBriefArray }: DecksProps) {
+  if (!deckBriefArray) {
+    return null;
+  }
   return (
     <>
-      {deckBriefArray.map((deck) => (
-        <Link href={`/dashboard/flashcards/${deck.id}`} key={deck.id}>
-          <Card>
-            <CardHeader>
-              <CardTitle>{deck.title}</CardTitle>
+      {deckBriefArray.map((title) => (
+        <Link href={`/dashboard/flashcards/${title}`} key={title}>
+          <Card className="h-full w-32">
+            <CardHeader className="w-full h-full items-center justify-center">
+              <CardTitle>{title}</CardTitle>
             </CardHeader>
-            <CardContent>{deck.description}</CardContent>
           </Card>
         </Link>
       ))}

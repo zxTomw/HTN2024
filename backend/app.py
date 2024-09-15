@@ -6,6 +6,8 @@ import json
 load_dotenv()
 supabase = supabase_auth()
 
+app = Flask(__name__)
+
 @app.route('/api/users', methods=['POST'])
 def create_user_handler():
     user = request.json['user']
@@ -40,7 +42,7 @@ def add_deck_handler():
     deck_name = request.json['deck_name']
     response = add_deck(supabase, user, deck_name)
     return json.dumps(response)
-    
+
 
 
 

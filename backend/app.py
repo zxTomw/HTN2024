@@ -1,10 +1,19 @@
 from database import *
 from query import *
-from flask import Flask
+from flask import Flask, request
 import json
+from gptfile import summarize
 
 load_dotenv()
 supabase = supabase_auth()
+
+app = Flask(__name__)
+
+@app.route('/summarize', methods=['POST'])
+def upload_file():
+    file = request.files['file']
+    file.save(file.filename)
+    return summarize(file.filename)
 
 @app.route('/api/users', methods=['POST'])
 def create_user_handler():

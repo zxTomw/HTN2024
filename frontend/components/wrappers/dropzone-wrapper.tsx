@@ -19,7 +19,16 @@ export function DropzoneWrapper({ className }: DropzoneWrapperProps) {
   const { isPending, error, data } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-      fetch("https://api.github.com/repos/TanStack/query").then((res) =>
+      fetch("http://127.0.0.1:5000/summarize", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          files,
+        }),
+        
+      }).then((res) =>
         res.json()
       ),
   });

@@ -1,3 +1,5 @@
+# RUN THIS FILE FOR TESTING PURPOSES, LOOPS THOURH METHODS - DEREK ========================================================
+# 3 methods are available: question, flashcard, summarize
 from openai import OpenAI
 from dotenv import load_dotenv
 import os
@@ -7,22 +9,34 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 print(OPENAI_API_KEY)
 
 client = OpenAI(api_key = OPENAI_API_KEY)
- 
-summarizer_assistant = client.beta.assistants.create(
+
+
+
+def flashcard(filename):
+  userPrompt = "Please create 5 flashcard questions followed by their answers. Based on the given document, refer specific sections and content of the document. Keep the questions brief and *ONLY* in json format"
+  fileProcess(filename, userPrompt)
+def summarize(filename, concept):
+  userPrompt = f"Please summarize the concept of {concept} in under 3 sentences. Refer specific quotes of the document."
+  fileProcess(filename, userPrompt)
+
+def question(filename, question): # example: What is the university and program is this course for?
+  userPrompt = question
+  fileProcess(filename, userPrompt)
+
+def fileProcess(filename, userPrompt):
+#/home/derek/Downloads/HTN2024/document.pdf
+
+  assistant = client.beta.assistants.create(
   name="Document Interpret dude",
   instructions="You are an expert on the topic in the given document. Please answer questions the user has on the topic, referring specific sections of the text. Briefly respond within 2 sentences or less.",
   model="gpt-4o",
   tools=[{"type": "file_search"}],
-)
-
-
-def summarize(filename):
-#/home/derek/Downloads/HTN2024/document.pdf
-
+  )
   # Create a vector store caled "Financial Statements"
   vector_store = client.beta.vector_stores.create(name="UploadedDocument")
 
-  userInput = input("Enter question: ")
+  # userPrompt = input("Enter question: ")
+  
   # Ready the files for upload to OpenAI
   file_paths = [filename] 
   file_streams = [open(path, "rb") for path in file_paths]
@@ -55,7 +69,7 @@ def summarize(filename):
     messages=[
       {
         "role": "user",
-        "content": userInput,
+        "content": userPrompt,
         # Attach the new file to the message.
         "attachments": [
           { "file_id": message_file.id, "tools": [{"type": "file_search"}] }
@@ -88,3 +102,17 @@ def summarize(filename):
   print(message_content.value)
   print("\n".join(citations))
   return (message_content.value, "\n".join(citations))
+
+
+# FOR TESTING PURPOSES RUN THIS FILE ================================================================
+while True:
+  print("QUESTION:1, FLASHCARD:2, SUMMARIZE:3")
+  user = input()
+  if user == "1":
+    question("/home/derek/Downloads/HTN2024/document.pdf", input("Enter question: "))
+  elif user == "2":
+    flashcard("/home/derek/Downloads/HTN2024/document.pdf")
+  elif user == "3":
+    summarize("/home/derek/Downloads/HTN2024/document.pdf", input("Enter concept to highlight: "))
+  else:
+    break

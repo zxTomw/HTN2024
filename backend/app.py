@@ -2,7 +2,7 @@ from database import *
 from query import *
 from flask import Flask, request
 import json
-from gptfile import summarize
+from gptfile import fileProcess
 
 load_dotenv()
 supabase = supabase_auth()
@@ -13,7 +13,7 @@ app = Flask(__name__)
 def upload_file():
     file = request.files['file']
     file.save(file.filename)
-    return summarize(file.filename)
+    return fileProcess(file.filename)
 
 @app.route('/api/users', methods=['POST'])
 def create_user_handler():

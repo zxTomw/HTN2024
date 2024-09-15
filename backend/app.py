@@ -2,6 +2,7 @@ from database import *
 from query import *
 from flask import Flask
 import json
+from flask import request
 
 load_dotenv()
 supabase = supabase_auth()
@@ -14,9 +15,8 @@ def create_user_handler():
     response = create_user(supabase, user)
     return response
 
-@app.route('/api/decks', methods=['GET'])
-def show_decks_handler():
-    user = request.json['user']
+@app.route('/api/users/<user>/decks', methods=['GET'])
+def show_decks_handler(user):
     response = show_decks(supabase, user)
     return json.dumps(response)
 

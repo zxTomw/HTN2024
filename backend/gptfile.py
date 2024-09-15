@@ -15,7 +15,7 @@ client = OpenAI(api_key = OPENAI_API_KEY)
 
 
 def flashcard(filename):
-  userPrompt = "Please create 5 flashcard questions in the following format: {{id:string, front:string, back:string}}[]. Based on the given document, refer specific sections and content of the document. Keep the questions brief, in plain text, and *ONLY* in json format. Do not use markdown or have any formatting."
+  userPrompt = "Please create 5 flashcard questions in the following format: {{id:string, front:string, back:string}}[]. Based on the given document, refer specific sections and content of the document. Keep the questions brief, in plain text, and *ONLY* in json format. Make sure that all symbols used will work with json format. Do not use markdown or have any formatting."
   return fileProcess(filename, userPrompt)
 def summarize(filename, concept):
   userPrompt = f"Please summarize the concept of {concept} in three key points. Refer specific quotes of the document."

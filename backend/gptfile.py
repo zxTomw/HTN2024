@@ -3,6 +3,8 @@
 from openai import OpenAI
 from dotenv import load_dotenv
 import os
+import base64
+import requests
 
 load_dotenv()
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
@@ -23,49 +25,55 @@ def question(filename, question): # example: What is the university and program 
   userPrompt = question
   return fileProcess(filename, userPrompt)
 
-# def handNotes(filename):
-#   # Function to encode the image
+def handNotes(filename):
+  # Function to encode the image
 
-#   # Path to your image
-#   image_path = "path_to_your_image.jpg"
 
-#   # Getting the base64 string
-#   base64_image = encode_image(image_path)
 
-#   headers = {
-#     "Content-Type": "application/json",
-#     "Authorization": f"Bearer {api_key}"
-#   }
+  # Getting the base64 string
+  base64_image = encode_image(filename)
 
-#   payload = {
-#     "model": "gpt-4o-mini",
-#     "messages": [
-#       {
-#         "role": "user",
-#         "content": [
-#           {
-#             "type": "text",
-#             "text": "What’s in this image?"
-#           },
-#           {
-#             "type": "image_url",
-#             "image_url": {
-#               "url": f"data:image/jpeg;base64,{base64_image}"
-#             }
-#           }
-#         ]
-#       }
-#     ],
-#     "max_tokens": 300
-# }
+  headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {OPENAI_API_KEY}"
+  }
 
-#   response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+  payload = {
+    "model": "gpt-4o-mini",
+    "messages": [
+        {
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": "The given image is of a note taken in class. Please transcribe the text in the image, responding with only the transcription."
+            },
+            {
+              "type": "image_url",
+              "image_url": {
+                "url": f"data:image/jpeg;base64,{base64_image}"
+              }
+            }
+          ]
+        }
+      ],
+      "max_tokens": 300
+  }
 
-#   print(response.json())
+  response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
 
-# def encode_image(image_path):
-#   with open(image_path, "rb") as image_file:
-#     return base64.b64encode(image_file.read()).decode('utf-8')
+  # print(response.json())
+  transcriptionjson = response.json() # return the content as string
+  transcription = transcriptionjson['choices'][0]['message']['content']
+  print(transcription)
+  text_file = open("transcription.txt", "w")
+  text_file.write(transcription)
+  text_file.close()
+  return summarize("transcription.txt", "this document")
+
+def encode_image(image_path):
+  with open(image_path, "rb") as image_file:
+    return base64.b64encode(image_file.read()).decode('utf-8')
 
 
 def fileProcess(filename, userPrompt):
@@ -150,14 +158,18 @@ def fileProcess(filename, userPrompt):
 
 
 # FOR TESTING PURPOSES RUN THIS FILE ================================================================
+doc_path = "./document.pdf"
+image_path = "./notes.jpg"
 while True:
-  print("QUESTION:1, FLASHCARD:2, SUMMARIZE:3")
+  print("TYPE: QUESTION: 1, FLASHCARD: 2, SUMMARIZE: 3, READ HANDWRITTEN NOTES: 4, EXIT: ENTER")
   user = input()
   if user == "1":
-    question("./251lec1.pdf", input("Enter question: "))
+    question(doc_path, input("Enter question: "))
   elif user == "2":
-    flashcard("/home/derek/Downloads/HTN2024/document.pdf")
+    flashcard(doc_path)
   elif user == "3":
-    summarize("/home/derek/Downloads/HTN2024/document.pdf", input("Enter concept to highlight: "))
+    summarize(doc_path, input("Enter concept to highlight: "))
+  elif user == "4":
+    handNotes(image_path)
   else:
     break

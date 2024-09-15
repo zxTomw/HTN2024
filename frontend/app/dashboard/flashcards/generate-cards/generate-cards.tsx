@@ -3,12 +3,16 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { DropzoneWrapper } from "@/components/wrappers/dropzone-wrapper";
-import { useState } from "react";
+import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export function GenerateCards() {
   const [files, setFiles] = useState<FileList | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState<string | null>(null);
   function uploadFile(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData();
     formData.append("file", files![0]);
     fetch("http://127.0.0.1:8000/flashcard-gen", {
@@ -16,8 +20,14 @@ export function GenerateCards() {
       body: formData,
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data);
+        setMsg(data["msg"]);
+      });
   }
+  useEffect(() => {
+    msg && redirect(`/dashboard/flashcards/result?deck=${msg}`);
+  }, [msg]);
 
   return (
     <form
@@ -34,7 +44,7 @@ export function GenerateCards() {
           onChange={(value) => setFiles(value.target.files)}
         />
       </div>
-      <Button disabled={!files} type="submit">
+      <Button disabled={!files || loading} type="submit">
         Generate Flashcards
       </Button>
     </form>

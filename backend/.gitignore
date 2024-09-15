@@ -3,3 +3,5 @@
 /include
 /bin
 /pyvenv.cfg
+/env
+/__pycache__

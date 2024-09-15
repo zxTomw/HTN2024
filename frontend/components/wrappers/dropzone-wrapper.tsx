@@ -2,6 +2,13 @@
 import { useState } from "react";
 import { Dropzone } from "../ui/dropzone";
 import { cn } from "@/lib/utils";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 type DropzoneWrapperProps = {
   className?: string;
@@ -9,6 +16,13 @@ type DropzoneWrapperProps = {
 
 export function DropzoneWrapper({ className }: DropzoneWrapperProps) {
   const [files, setFiles] = useState<string[]>([]);
+  const { isPending, error, data } = useQuery({
+    queryKey: ["repoData"],
+    queryFn: () =>
+      fetch("https://api.github.com/repos/TanStack/query").then((res) =>
+        res.json()
+      ),
+  });
   return (
     <>
       <Dropzone

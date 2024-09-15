@@ -13,7 +13,7 @@ client = OpenAI(api_key = OPENAI_API_KEY)
 
 
 def flashcard(filename):
-  userPrompt = "Please create 5 flashcard questions followed by their answers. Based on the given document, refer specific sections and content of the document. Keep the questions brief and *ONLY* in json format"
+  userPrompt = "Please create 5 flashcard questions in the following format: {{id:string, front:string, back:string}}[]. Based on the given document, refer specific sections and content of the document. Keep the questions brief, in plain text, and *ONLY* in json format. Do not use markdown or have any formatting."
   return fileProcess(filename, userPrompt)
 def summarize(filename, concept):
   userPrompt = f"Please summarize the concept of {concept} in three key points. Refer specific quotes of the document."
@@ -22,6 +22,51 @@ def summarize(filename, concept):
 def question(filename, question): # example: What is the university and program is this course for?
   userPrompt = question
   return fileProcess(filename, userPrompt)
+
+# def handNotes(filename):
+#   # Function to encode the image
+
+#   # Path to your image
+#   image_path = "path_to_your_image.jpg"
+
+#   # Getting the base64 string
+#   base64_image = encode_image(image_path)
+
+#   headers = {
+#     "Content-Type": "application/json",
+#     "Authorization": f"Bearer {api_key}"
+#   }
+
+#   payload = {
+#     "model": "gpt-4o-mini",
+#     "messages": [
+#       {
+#         "role": "user",
+#         "content": [
+#           {
+#             "type": "text",
+#             "text": "What’s in this image?"
+#           },
+#           {
+#             "type": "image_url",
+#             "image_url": {
+#               "url": f"data:image/jpeg;base64,{base64_image}"
+#             }
+#           }
+#         ]
+#       }
+#     ],
+#     "max_tokens": 300
+# }
+
+#   response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+
+#   print(response.json())
+
+# def encode_image(image_path):
+#   with open(image_path, "rb") as image_file:
+#     return base64.b64encode(image_file.read()).decode('utf-8')
+
 
 def fileProcess(filename, userPrompt):
 #/home/derek/Downloads/HTN2024/document.pdf

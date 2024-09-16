@@ -1,5 +1,7 @@
 # HTN2024 - personalnote
 
+https://www.youtube.com/watch?v=LTBq_PJbL-k
+
 ## Inspiration
 
 As students, you probably all have played around with AI chatbots and (possibly) ran a couple homework problems through them. But, as you might have noticed, traditional chat bots have their drawbacks: 1. sometimes providing inaccurate information, and 2. not referencing the course material we want...
@@ -33,7 +35,8 @@ Our team was formed at the icebreaker events late Friday, and almost all of us w
 ## What we learned
 
 Pretty much almost everything we worked was new to us! From learning the basics of web like communicating between frontend and backend to just having fun with LLMs, working on a project like this really allowed us to touch on many new skills. Also, OpenAI's file search feature was really cool and easy to use and we plan on trying it out more in the future.
-What's next for personalnote.study
+
+## What's next for personalnote
 
 We'd like to try out mobile app development which could make it much easier to use our image scanning feature.
 

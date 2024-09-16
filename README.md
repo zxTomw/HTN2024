@@ -26,9 +26,9 @@ Our team was formed at the icebreaker events late Friday, and almost all of us w
 
 ## Accomplishments that we're proud of
 
-    It was an incredible experience to have something working by the end of such a short time period!
-    Finally seeing our product working
-    New friends!
+- It was an incredible experience to have something working by the end of such a short time period!
+- Finally seeing our product working
+- New friends!
 
 ## What we learned
 

@@ -4,7 +4,9 @@ https://www.youtube.com/watch?v=LTBq_PJbL-k
 
 ## Inspiration
 
-As students, you probably all have played around with AI chatbots and (possibly) ran a couple homework problems through them. But, as you might have noticed, traditional chat bots have their drawbacks: 1. sometimes providing inaccurate information, and 2. not referencing the course material we want...
+As students, you probably have played around with AI chatbots and (possibly) ran a couple homework problems through them. But, as you might have noticed, traditional chat bots have their drawbacks: 
+1. sometimes providing inaccurate information, and
+2. not referencing the course material we want...
 
 Our team believed in a solution where we could easily feed in course notes, textbooks, and a variety of personalized source material to learn and practice off of. This way, we can create much more accurate, course-based answers and practice material on the go!
 
